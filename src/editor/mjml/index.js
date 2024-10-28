@@ -9,6 +9,12 @@ import { useEffect, useRef, useState } from '@wordpress/element';
 import { refreshEmailHtml } from '../../newsletter-editor/utils';
 
 /**
+ * Internal dependencies
+ */
+import { fetchNewsletterData, fetchSyncErrors, updateNewsletterDataError } from '../../newsletter-editor/store';
+import { getServiceProvider } from '../../service-providers';
+
+/**
  * Custom hook for fetching the prior value of a prop.
  *
  * @param {*} value The prop to track.
@@ -77,6 +83,10 @@ function MJML() {
 
 	// After the post is successfully saved, refresh the email HTML.
 	const wasSaving = usePrevProp( isSaving );
+	const { name: serviceProviderName } = getServiceProvider();
+	const { supported_esps: supportedESPs } = newspack_email_editor_data || [];
+	const isSupportedESP = serviceProviderName && 'manual' !== serviceProviderName && supportedESPs?.includes( serviceProviderName );
+
 	useEffect( () => {
 		if (
 			wasSaving &&
@@ -92,14 +102,26 @@ function MJML() {
 			refreshEmailHtml( postId, postTitle, postContent )
 				.then( refreshedHtml => {
 					updateMetaValue( newspack_email_editor_data.email_html_meta, refreshedHtml );
-					apiFetch( {
+					return apiFetch( {
 						data: { meta: { [ newspack_email_editor_data.email_html_meta ]: refreshedHtml } },
 						method: 'POST',
 						path: `/wp/v2/${ postType }/${ postId }`,
 					} );
+				} ).then( () => {
+					// Rehydrate ESP newsletter data after completing sync.
+					if ( isSupportedESP ) {
+						return fetchNewsletterData( postId );
+					}
+					return true;
+				} ).then ( () => {
+					// Check for sync errors after refreshing the HTML.
+					if ( isSupportedESP ) {
+						return fetchSyncErrors( postId );
+					}
+					return true;
 				} )
 				.catch( e => {
-					console.warn( e ); // eslint-disable-line no-console
+					updateNewsletterDataError( e );
 				} )
 				.finally( () => {
 					unlockPostSaving( 'newspack-newsletters-refresh-html' );
