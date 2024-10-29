@@ -1,3 +1,10 @@
+## [3.3.1](https://github.com/Automattic/newspack-newsletters/compare/v3.3.0...v3.3.1) (2024-10-29)
+
+
+### Bug Fixes
+
+* check for error type before logging ([#1684](https://github.com/Automattic/newspack-newsletters/issues/1684)) ([d1e8ef4](https://github.com/Automattic/newspack-newsletters/commit/d1e8ef46789d658ef66b50936c6bb2b3cc6a02fa))
+
 # [3.3.0](https://github.com/Automattic/newspack-newsletters/compare/v3.2.1...v3.3.0) (2024-10-28)
 
 
