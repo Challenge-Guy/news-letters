@@ -1,3 +1,10 @@
+## [3.3.2](https://github.com/Automattic/newspack-newsletters/compare/v3.3.1...v3.3.2) (2024-10-29)
+
+
+### Bug Fixes
+
+* strip Mailchimp merge tags from email preview text ([#1682](https://github.com/Automattic/newspack-newsletters/issues/1682)) ([ba1609a](https://github.com/Automattic/newspack-newsletters/commit/ba1609a1b803428f40b552088252157f20195428))
+
 ## [3.3.1](https://github.com/Automattic/newspack-newsletters/compare/v3.3.0...v3.3.1) (2024-10-29)
 
 
