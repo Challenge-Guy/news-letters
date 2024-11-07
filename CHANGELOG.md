@@ -1,3 +1,10 @@
+## [3.3.3](https://github.com/Automattic/newspack-newsletters/compare/v3.3.2...v3.3.3) (2024-11-07)
+
+
+### Bug Fixes
+
+* **send-lists:** temporary fix for searching many mailchimp audiences ([#1693](https://github.com/Automattic/newspack-newsletters/issues/1693)) ([e41f3b6](https://github.com/Automattic/newspack-newsletters/commit/e41f3b69ed58ea8a2442d56a5a4e7c24d4e81242))
+
 ## [3.3.2](https://github.com/Automattic/newspack-newsletters/compare/v3.3.1...v3.3.2) (2024-10-29)
 
 
