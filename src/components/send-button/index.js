@@ -18,8 +18,9 @@ import { get } from 'lodash';
  * Internal dependencies
  */
 import { getServiceProvider } from '../../service-providers';
-import { refreshEmailHtml, validateNewsletter } from '../../newsletter-editor/utils';
+import { validateNewsletter } from '../../newsletter-editor/utils';
 import { useNewsletterData } from '../../newsletter-editor/store';
+import { refreshEmailHtml } from '../../editor/mjml';
 import './style.scss';
 
 function PreviewHTML() {
@@ -244,7 +245,7 @@ export default compose( [
 		// For sent newsletters, display the generic button text.
 		if ( isPublished || sent ) {
 			return (
-				<Fragment>
+				<div style={{ display: 'flex' }}>
 					<PreviewHTMLButton />
 					<Button
 						className="editor-post-publish-button"
@@ -293,12 +294,12 @@ export default compose( [
 							</div>
 						</Modal>
 					) }
-				</Fragment>
+				</div>
 			);
 		}
 
 		return (
-			<Fragment>
+			<div style={{ display: 'flex' }}>
 				<PreviewHTMLButton />
 				<Button
 					className="editor-post-publish-button"
@@ -366,7 +367,7 @@ export default compose( [
 						</div>
 					</Modal>
 				) }
-			</Fragment>
+			</div>
 		);
 	}
 );
