@@ -111,29 +111,6 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	}
 
 	/**
-	 * Retrieves an instance of the Mailchimp api
-	 *
-	 * @return DrewM\MailChimp\MailChimp|WP_Error
-	 */
-	private static function get_mc_api() {
-		$api_key = self::get_mc_instance()->api_key();
-		if ( empty( $api_key ) ) {
-			return new WP_Error(
-				'newspack_newsletters_mailchimp_error',
-				__( 'Missing Mailchimp API key.', 'newspack-newsletters' )
-			);
-		}
-		try {
-			return new Mailchimp( $api_key );
-		} catch ( Exception $e ) {
-			return new WP_Error(
-				'newspack_newsletters_mailchimp_error',
-				$e->getMessage()
-			);
-		}
-	}
-
-	/**
 	 * Get audiences (lists).
 	 *
 	 * @param int|null $limit (Optional) The maximum number of items to return. If not given, will get all items.
@@ -576,10 +553,8 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	 * @return array|WP_Error The audiences, or WP_Error if there was an error.
 	 */
 	public static function fetch_lists( $limit = null ) {
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return [];
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
+
 		$lists_response = ( self::get_mc_instance() )->validate(
 			$mc->get(
 				'lists',
@@ -595,6 +570,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 		if ( ! $limit ) {
 			update_option( self::get_lists_cache_key(), $lists_response['lists'], false ); // auto-load false.
 			update_option( self::get_cache_date_key(), time(), false ); // auto-load false.
+			self::clear_errors();
 		}
 
 		return $lists_response['lists'];
@@ -610,10 +586,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	 * @return array The audience segment
 	 */
 	public static function fetch_segment( $segment_id, $list_id ) {
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return $mc;
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
 		$response = ( self::get_mc_instance() )->validate(
 			$mc->get(
 				"lists/$list_id/segments/$segment_id",
@@ -640,10 +613,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	public static function fetch_segments( $list_id, $limit = null ) {
 		$segments = [];
 
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return $segments;
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
 
 		$saved_segments_response  = ( self::get_mc_instance() )->validate(
 			$mc->get(
@@ -671,10 +641,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	 * @return array The audience interest_categories
 	 */
 	private static function fetch_interest_categories( $list_id, $limit = null ) {
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return [];
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
 		$interest_categories = $list_id ? ( self::get_mc_instance() )->validate(
 			$mc->get( "lists/$list_id/interest-categories", [ 'count' => $limit ?? 1000 ], 60 ),
 			__( 'Error retrieving Mailchimp groups.', 'newspack_newsletters' )
@@ -703,10 +670,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	 * @return array The audience tags
 	 */
 	public static function fetch_tags( $list_id, $limit = null ) {
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return [];
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
 		$tags = $list_id ? ( self::get_mc_instance() )->validate(
 			$mc->get(
 				"lists/$list_id/segments",
@@ -733,10 +697,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	 * @return array The list folders
 	 */
 	private static function fetch_folders() {
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return [];
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
 		$response = ( self::get_mc_instance() )->validate(
 			$mc->get( 'campaign-folders', [ 'count' => 1000 ], 60 ),
 			__( 'Error retrieving Mailchimp folders.', 'newspack_newsletters' )
@@ -752,10 +713,7 @@ final class Newspack_Newsletters_Mailchimp_Cached_Data {
 	 * @return array The list interest_categories
 	 */
 	private static function fetch_merge_fields( $list_id ) {
-		$mc = self::get_mc_api();
-		if ( \is_wp_error( $mc ) ) {
-			return [];
-		}
+		$mc = new Mailchimp( ( self::get_mc_instance() )->api_key() );
 		$response = ( self::get_mc_instance() )->validate(
 			$mc->get(
 				"lists/$list_id/merge-fields",
