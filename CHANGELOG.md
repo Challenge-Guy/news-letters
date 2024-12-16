@@ -1,3 +1,15 @@
+# [3.7.0](https://github.com/Automattic/newspack-newsletters/compare/v3.6.0...v3.7.0) (2024-12-16)
+
+
+### Bug Fixes
+
+* add check to see if color is populated before adding to CSS ([#1719](https://github.com/Automattic/newspack-newsletters/issues/1719)) ([a64a0f2](https://github.com/Automattic/newspack-newsletters/commit/a64a0f29ca456275f16b97fdbffd8fb45db7930e))
+
+
+### Features
+
+* add support for BlueSky in social links blocks ([#1722](https://github.com/Automattic/newspack-newsletters/issues/1722)) ([b13fbb0](https://github.com/Automattic/newspack-newsletters/commit/b13fbb02feb0b0998969c264bd256a6ef888368d))
+
 # [3.6.0](https://github.com/Automattic/newspack-newsletters/compare/v3.5.0...v3.6.0) (2024-12-09)
 
 
