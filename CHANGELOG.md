@@ -1,3 +1,10 @@
+## [3.7.1](https://github.com/Automattic/newspack-newsletters/compare/v3.7.0...v3.7.1) (2024-12-23)
+
+
+### Bug Fixes
+
+* avoid creating merge fields if we can't get merge fields ([#1729](https://github.com/Automattic/newspack-newsletters/issues/1729)) ([416ac62](https://github.com/Automattic/newspack-newsletters/commit/416ac6243cd0dcf0d77834ae37bb68297f4d0b1b))
+
 # [3.7.0](https://github.com/Automattic/newspack-newsletters/compare/v3.6.0...v3.7.0) (2024-12-16)
 
 
