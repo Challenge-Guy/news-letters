@@ -1,3 +1,10 @@
+## [3.7.3](https://github.com/Automattic/newspack-newsletters/compare/v3.7.2...v3.7.3) (2025-01-14)
+
+
+### Bug Fixes
+
+* **recaptcha:** use filter for deciding whether to do reCAPTCHA check ([#1737](https://github.com/Automattic/newspack-newsletters/issues/1737)) ([e75ccfb](https://github.com/Automattic/newspack-newsletters/commit/e75ccfba7b6d31a9e6544c8ab5a2df08e4bbf9e9))
+
 ## [3.7.2](https://github.com/Automattic/newspack-newsletters/compare/v3.7.1...v3.7.2) (2025-01-08)
 
 
