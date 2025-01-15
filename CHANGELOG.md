@@ -1,3 +1,11 @@
+## [3.7.4](https://github.com/Automattic/newspack-newsletters/compare/v3.7.3...v3.7.4) (2025-01-15)
+
+
+### Bug Fixes
+
+* always allow tracking redirects to site url ([#1738](https://github.com/Automattic/newspack-newsletters/issues/1738)) ([a97788f](https://github.com/Automattic/newspack-newsletters/commit/a97788fac774c7d9149cf0982bf8c60386268ef8))
+* retrigger release for PR[#1738](https://github.com/Automattic/newspack-newsletters/issues/1738) ([69ed769](https://github.com/Automattic/newspack-newsletters/commit/69ed769ac1d27ce4b02de96ed12f63c864ea3a3c))
+
 ## [3.7.3](https://github.com/Automattic/newspack-newsletters/compare/v3.7.2...v3.7.3) (2025-01-14)
 
 
