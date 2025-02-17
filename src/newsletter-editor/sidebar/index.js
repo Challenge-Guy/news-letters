@@ -40,7 +40,7 @@ const Sidebar = ( {
 	stringifiedCampaignDefaults,
 	postId,
 } ) => {
-	const [ plainTextTitle, setPlainTextTitle ] = useState( title );
+	const [ plainTextTitle, setPlainTextTitle ] = useState( null );
 	const isRetrieving = useIsRetrieving();
 	const newsletterData = useNewsletterData();
 	const newsletterDataError = useNewsletterDataError();
@@ -51,13 +51,25 @@ const Sidebar = ( {
 	// Create a temp textarea element that we can use to convert HTML entities like &amp; to unicode characters.
 	useEffect( () => {
 		if ( entityConverter.current ) {
-			entityConverter.current.innerHTML = title;
-			setPlainTextTitle( entityConverter.current.value );
 		} else {
 			entityConverter.current = document.createElement( 'textarea' );
 		}
 		return () => entityConverter?.current?.remove && entityConverter.current.remove(); // Clean up temp element from DOM on unmount.
+	}, [] );
+
+	// Decode HTML entities in title.
+	useEffect( () => {
+		entityConverter.current.innerHTML = title;
+		setPlainTextTitle( entityConverter.current.value );
 	}, [ title ] );
+
+	// Encode HTML entities in title.
+	useEffect( () => {
+		if ( null !== plainTextTitle ) {
+			entityConverter.current.innerText = plainTextTitle;
+			editPost( { title: entityConverter.current.innerHTML } );
+		}
+	}, [ plainTextTitle ] );
 
 	// Reconcile stored campaign data with data fetched from ESP.
 	useEffect( () => {
@@ -199,7 +211,7 @@ const Sidebar = ( {
 				className="newspack-newsletters__subject-textcontrol"
 				value={ plainTextTitle }
 				disabled={ inFlight }
-				onChange={ value => editPost( { title: value } ) }
+				onChange={ setPlainTextTitle }
 			/>
 			<TextareaControl
 				label={ __( 'Preview text', 'newspack-newsletters' ) }
