@@ -394,6 +394,22 @@ final class Newspack_Newsletters {
 		);
 		\register_meta(
 			'post',
+			'text_color',
+			[
+				'object_subtype' => self::NEWSPACK_NEWSLETTERS_CPT,
+				'show_in_rest'   => [
+					'schema' => [
+						'context' => [ 'edit' ],
+					],
+				],
+				'type'           => 'string',
+				'single'         => true,
+				'auth_callback'  => '__return_true',
+				'default'        => '',
+			]
+		);
+		\register_meta(
+			'post',
 			'preview_text',
 			[
 				'object_subtype' => self::NEWSPACK_NEWSLETTERS_CPT,
@@ -973,11 +989,13 @@ final class Newspack_Newsletters {
 			$font_header      = get_post_meta( $post->ID, 'font_header', true );
 			$font_body        = get_post_meta( $post->ID, 'font_body', true );
 			$background_color = get_post_meta( $post->ID, 'background_color', true );
+			$text_color       = get_post_meta( $post->ID, 'text_color', true );
 			?>
 				<style>
 					.main-content {
 						background-color: <?php echo esc_attr( $background_color ); ?>;
 						font-family: <?php echo esc_attr( $font_body ); ?>;
+						color: <?php echo esc_attr( $text_color ); ?>;
 					}
 					.main-content h1,
 					.main-content h2,
