@@ -1196,11 +1196,19 @@ final class Newspack_Newsletters_Constant_Contact extends \Newspack_Newsletters_
 		if ( isset( $contact['metadata'] ) ) {
 			$data['custom_fields'] = [];
 			foreach ( $contact['metadata'] as $key => $value ) {
-				$data['custom_fields'][ strval( $key ) ] = strval( $value );
+				// Update request will fail if metadata contains an empty value, so we set these to '-'.
+				$data['custom_fields'][ strval( $key ) ] = empty( $value ) ? '-' : strval( $value );
 			}
 		}
-
-		$result = $cc->upsert_contact( $contact['email'], $data );
+		$email = $contact['email'];
+		if ( isset( $contact['existing_contact_data']['email_address'] ) ) {
+			$existing_email = $contact['existing_contact_data']['email_address'];
+			if ( $existing_email->address !== $email ) {
+				$data['email'] = $email;
+				$email         = $existing_email->address;
+			}
+		}
+		$result = $cc->upsert_contact( $email, $data );
 		if ( is_wp_error( $result ) || empty( $result ) ) {
 
 			// Log the error with any details returned from the API.
