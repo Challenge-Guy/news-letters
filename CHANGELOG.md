@@ -1,3 +1,11 @@
+## [3.9.1](https://github.com/Automattic/newspack-newsletters/compare/v3.9.0...v3.9.1) (2025-03-05)
+
+
+### Bug Fixes
+
+* allow for context-specific reader-facing error messsages ([#1754](https://github.com/Automattic/newspack-newsletters/issues/1754)) ([db4e742](https://github.com/Automattic/newspack-newsletters/commit/db4e742f407f2b8ae992f801c298913ca003de15))
+* **editor:** allow newsletter editor JS to run for manual ESP ([#1770](https://github.com/Automattic/newspack-newsletters/issues/1770)) ([bc16567](https://github.com/Automattic/newspack-newsletters/commit/bc165678c7d0bece5f7468999152306cefe282b5))
+
 # [3.9.0](https://github.com/Automattic/newspack-newsletters/compare/v3.8.1...v3.9.0) (2025-03-04)
 
 
